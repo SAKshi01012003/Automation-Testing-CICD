@@ -25,7 +25,7 @@ jobs:
 
       - name: Run comparison script
         run: |
-          python scripts/compare_responses.py responses/previous/response_previous.json responses/latest/response_latest.json
+          python scripts/compare_responses.py responses/response_previous.json responses/response_latest.json
 
       - name: Upload diff reports
         uses: actions/upload-artifact@v4
