@@ -1,0 +1,34 @@
+name: Compare API Responses
+
+on:
+  workflow_dispatch:   # Manual trigger
+  push:
+    branches:
+      - main
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run comparison script
+        run: |
+          python scripts/compare_responses.py responses/previous/response_previous.json responses/latest/response_latest.json
+
+      - name: Upload diff reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: diff-output
+          path: diff_output/
